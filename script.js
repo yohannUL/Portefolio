@@ -130,7 +130,135 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenuButton.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
     });
+
+    // Configuration du carrousel
+    const carousel = {
+        container: document.querySelector('.carousel-container'),
+        slides: document.querySelectorAll('.project-card'),
+        prevButton: document.querySelector('.carousel-button.prev'),
+        nextButton: document.querySelector('.carousel-button.next'),
+        indicators: document.querySelectorAll('.carousel-indicator'),
+        currentSlide: 0,
+        slideWidth: 0,
+        autoPlayInterval: null,
+        isMoving: false,
+        isPaused: false,
+        baseSpeed: 1.5, // Vitesse de défilement en pixels par frame
+    };
+
+    // Initialisation du carrousel
+    function initCarousel() {
+        if (!carousel.container) return;
+
+        // Calculer la largeur des slides
+        carousel.slideWidth = carousel.container.offsetWidth / 3;
+
+        // Cloner les slides pour un défilement infini
+        const originalSlides = Array.from(carousel.slides);
+        originalSlides.forEach(slide => {
+            const clone = slide.cloneNode(true);
+            carousel.container.appendChild(clone);
+        });
+
+        // Mettre à jour la taille des slides
+        const allSlides = carousel.container.querySelectorAll('.project-card');
+        allSlides.forEach(slide => {
+            slide.style.flex = `0 0 ${carousel.slideWidth}px`;
+        });
+
+        // Position initiale
+        updateCarousel();
+
+        // Démarrer l'animation
+        startAutoScroll();
+
+        // Événements des boutons
+        carousel.prevButton.addEventListener('click', () => {
+            carousel.currentSlide = Math.max(carousel.currentSlide - 1, 0);
+            smoothScrollTo(-carousel.currentSlide * carousel.slideWidth);
+        });
+
+        carousel.nextButton.addEventListener('click', () => {
+            carousel.currentSlide = (carousel.currentSlide + 1) % carousel.slides.length;
+            smoothScrollTo(-carousel.currentSlide * carousel.slideWidth);
+        });
+
+        // Pause au survol
+        carousel.container.addEventListener('mouseenter', () => {
+            carousel.isPaused = true;
+        });
+
+        carousel.container.addEventListener('mouseleave', () => {
+            carousel.isPaused = false;
+        });
+    }
+
+    // Animation fluide
+    function startAutoScroll() {
+        let offset = 0;
+        let microPauseCounter = 0;
+        const microPauseInterval = 180; // Frames entre chaque micro-pause
+        const microPauseDuration = 30; // Durée de la micro-pause en frames
+
+        function animate() {
+            if (!carousel.isPaused) {
+                microPauseCounter++;
+
+                // Créer des micro-pauses périodiques
+                if (microPauseCounter % microPauseInterval !== 0 || microPauseCounter % (microPauseInterval + microPauseDuration) === 0) {
+                    offset -= carousel.baseSpeed;
+
+                    // Reset quand tous les slides originaux sont passés
+                    if (Math.abs(offset) >= carousel.slideWidth * carousel.slides.length) {
+                        offset = 0;
+                    }
+
+                    carousel.container.style.transform = `translateX(${offset}px)`;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    }
+
+    // Fonction pour un défilement fluide
+    function smoothScrollTo(targetOffset) {
+        const startOffset = parseFloat(carousel.container.style.transform.replace('translateX(', '').replace('px)', '') || 0);
+        const distance = targetOffset - startOffset;
+        const duration = 500; // ms
+        const start = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - start;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Fonction d'easing
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+
+            const currentOffset = startOffset + (distance * easeProgress);
+            carousel.container.style.transform = `translateX(${currentOffset}px)`;
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+
+        requestAnimationFrame(update);
+    }
+
+    // Mettre à jour l'affichage du carrousel
+    function updateCarousel() {
+        const offset = -carousel.currentSlide * carousel.slideWidth;
+        carousel.container.style.transform = `translateX(${offset}px)`;
+
+        // Mettre à jour les indicateurs
+        carousel.indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === carousel.currentSlide);
+        });
+    }
+
+    // Initialiser le carrousel au chargement de la page
+    window.addEventListener('load', initCarousel);
+    window.addEventListener('resize', initCarousel);
 });
-
-
-
