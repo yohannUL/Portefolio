@@ -8,173 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const animateElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            });
-
-            animateElements.forEach(el => observer.observe(el));
-
-            // Parallax effect for hero section
-            window.addEventListener('scroll', () => {
-                const scrollPosition = window.scrollY;
-                const hero = document.querySelector('#home');
-                if (hero) {
-                    hero.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
-                }
-            });
-
-            // Terminal typing effect
-            const terminalLines = document.querySelectorAll('.typing-animation');
-            terminalLines.forEach((line, index) => {
-                const delay = parseFloat(line.style.animationDelay || '0s');
-                setTimeout(() => {
-                    line.style.animation = 'none';
-                    line.style.borderRight = 'none';
-                    void line.offsetWidth; // Trigger reflow
-                    line.style.animation = `typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite`;
-                }, delay * 1000);
-            });
-        });
-    </script>
-    <style>
-        /* Custom CSS */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0e0e0e;
-            color: #f1f1f1;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        /* Apple-like animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .slide-in-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .slide-in-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .scale-in {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .scale-in.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .delay-1 { transition-delay: 0.2s; }
-        .delay-2 { transition-delay: 0.4s; }
-        .delay-3 { transition-delay: 0.6s; }
-
-        .hero-gradient {
-            background: linear-gradient(135deg, #0e0e0e 0%, #1a1a2e 100%);
-        }
-
-        .tech-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
-        }
-
-        .project-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px rgba(241, 196, 15, 0.3);
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -20px;
-            top: 0;
-            width: 2px;
-            height: 100%;
-            background: #007bff;
-        }
-
-        .terminal-cursor {
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .typing-animation {
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 2px solid #4ade80;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #4ade80 }
-        }
-
-        .skill-tag:hover {
-            background-color: #007bff;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .glow-on-hover:hover {
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
-        }
-
-        .project-card {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 25px rgba(241, 196, 15, 0.3);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 <!-- Navigation -->
@@ -190,6 +25,7 @@
                 <div class="ml-10 flex items-baseline space-x-4">
                     <a href="#home" class="text-blue-400 hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Accueil</a>
                     <a href="#about" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">À propos</a>
+                    <a href="#parcours" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Parcours</a>
                     <a href="#projects" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Projets</a>
                     <a href="#certifications" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Certifications</a>
                     <a href="#skills" class="text-gray-300 hover:text-yellow-400 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Compétences</a>
@@ -211,6 +47,7 @@
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="#home" class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium">Accueil</a>
             <a href="#about" class="text-gray-300 hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium">À propos</a>
+            <a href="#parcours" class="text-gray-300 hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium">Parcours</a>
             <a href="#projects" class="text-gray-300 hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium">Projets</a>
             <a href="#certifications" class="text-gray-300 hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium">Certifications</a>
             <a href="#skills" class="text-gray-300 hover:text-yellow-400 block px-3 py-2 rounded-md text-base font-medium">Compétences</a>
@@ -229,11 +66,11 @@
                     <div class="h-3 w-3 bg-yellow-500 rounded-full mr-2 animate-pulse" style="animation-delay: 0.2s"></div>
                     <div class="h-3 w-3 bg-green-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
                 </div>
-                <div id="terminal-content" class="space-y-2">
-                    <p class="typing-animation mb-2" style="animation-delay: 0.5s">> Bienvenue dans l'univers de Yohann Ekissi...</p>
-                    <p class="typing-animation mb-2" style="animation-delay: 2s">> Chargement du portfolio...</p>
-                    <p class="typing-animation mb-2" style="animation-delay: 3.5s">> Initialisation des compétences...</p>
-                    <p class="typing-animation" style="animation-delay: 5s">> Prêt à explorer <span class="terminal-cursor">|</span></p>
+                <div id="terminal-content">
+                    <p class="terminal-line" data-text="> Bienvenue dans l'univers de Yohann Ekissi..."></p>
+                    <p class="terminal-line" data-text="> Chargement du portfolio..."></p>
+                    <p class="terminal-line" data-text="> Initialisation des compétences..."></p>
+                    <p class="terminal-line" data-text="> Prêt à explorer"><span class="terminal-cursor">|</span></p>
                 </div>
             </div>
 
@@ -274,6 +111,94 @@
             </div>
         </div> <!-- Fin .max-w-7xl (About) -->
     </div> <!-- Fin .fade-in (About) -->
+</section>
+
+<!-- Parcours Section -->
+<section id="parcours" class="py-20 bg-gray-900">
+    <div class="fade-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-white mb-12 text-center">Parcours</h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Education -->
+                <div class="bg-gray-800 p-6 rounded-lg slide-in-left">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-400 p-3 rounded-full mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Formation</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-yellow-400 mr-2">🎓</span>
+                            <div>
+                                <h4 class="font-medium text-white">Université Laval</h4>
+                                <p class="text-gray-300">Baccalauréat en génie logiciel – depuis 2022</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Experience -->
+                <div class="bg-gray-800 p-6 rounded-lg slide-in-right">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-yellow-400 p-3 rounded-full mr-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Expérience</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-2">🏢</span>
+                            <div>
+                                <h4 class="font-medium text-white">Stage au Ministère</h4>
+                                <p class="text-gray-300">IA, veille technologique, automatisation</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-2">🛠️</span>
+                            <div>
+                                <h4 class="font-medium text-white">Hackathons & Innovation</h4>
+                                <p class="text-gray-300">Participation active à des événements tech</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Projects Highlight -->
+            <div class="mt-8 bg-gray-800 p-6 rounded-lg scale-in">
+                <div class="flex items-center mb-4">
+                    <div class="bg-purple-400 p-3 rounded-full mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">Projets marquants</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag bg-gray-700 text-blue-400 px-3 py-1 rounded-full">FlappIA</span>
+                    <span class="skill-tag bg-gray-700 text-blue-400 px-3 py-1 rounded-full">CNCpanneau</span>
+                    <span class="skill-tag bg-gray-700 text-blue-400 px-3 py-1 rounded-full">SnakeAI</span>
+                </div>
+            </div>
+
+            <!-- Goals -->
+            <div class="mt-8 bg-black p-6 rounded-lg border border-yellow-400 slide-in-left delay-1">
+                <div class="flex items-center">
+                    <span class="text-yellow-400 text-2xl mr-3">🚀</span>
+                    <h3 class="text-xl font-bold text-white">Ambition</h3>
+                </div>
+                <p class="text-gray-300 mt-2">Contribuer à la recherche en vision par ordinateur ou lancer un projet IA concret</p>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Projects Section -->
@@ -451,5 +376,63 @@
         <div class="hidden">/* Hey dev! Interested in collaborating? Let's build something amazing together! */</div>
     </div>
 </footer>
+
+<!-- Project Details Modal -->
+<div id="project-modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-black bg-opacity-90"></div>
+        </div>
+
+        <!-- Modal content -->
+        <div class="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
+            <div class="px-6 py-4">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 id="modal-title" class="text-2xl font-bold text-white mb-2">Titre du Projet</h3>
+                        <p id="modal-subtitle" class="text-blue-400 mb-4">Sous-titre du projet</p>
+                    </div>
+                    <button id="close-modal" class="text-gray-400 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="relative overflow-hidden rounded-lg">
+                        <img id="modal-image" src="" alt="Project" class="w-full h-auto object-cover scale-in">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                    </div>
+
+                    <div>
+                        <div class="bg-gray-800 p-4 rounded-lg mb-4 slide-in-right">
+                            <h4 class="text-yellow-400 font-medium mb-2">Description</h4>
+                            <p id="modal-description" class="text-gray-300">Description détaillée du projet...</p>
+                        </div>
+
+                        <div class="bg-gray-800 p-4 rounded-lg slide-in-right delay-1">
+                            <h4 class="text-yellow-400 font-medium mb-2">Technologies</h4>
+                            <div id="modal-technologies" class="flex flex-wrap gap-2">
+                                <!-- Filled by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-center space-x-4">
+                    <a id="modal-link" href="#" target="_blank" class="bg-blue-400 hover:bg-blue-500 text-black font-bold py-2 px-4 rounded-md transition duration-300 transform hover:scale-105">
+                        Voir le projet
+                    </a>
+                    <a id="modal-code" href="#" target="_blank" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 transform hover:scale-105">
+                        Code source
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
